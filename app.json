@@ -1,6 +1,9 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/organization/index",
+    "pages/service/index",
+    "pages/activity/index",
     "pages/list/index",
     "pages/cart/index",
     "pages/user/index",
@@ -13,40 +16,51 @@
     "pages/orderDetails/index"
   ],
   "window": {
-    "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#F6F6F6",
-    "navigationBarTextStyle": "black"
+    "navigationBarBackgroundColor": "#73106F",
+    "navigationBarTitleText": "南大人",
+    "backgroundColor" :"#73106F",
+    "navigationBarTextStyle": "white"
   },
   "sitemapLocation": "sitemap.json",
   "style": "v2",
+  "networkTimeout": {
+    "request": 50000,
+    "uploadFile": 60000
+  },
   "tabBar": {
     "backgroundColor": "#fff",
     "borderStyle": "white",
-    "color": "#333",
-    "selectedColor": "#ff5f19",
+    "color": "#f0f0f0",
+    "selectedColor": "#73106F",
     "list": [
       {
-        "selectedIconPath": "images/home_page_n.png",
-        "iconPath": "images/home_page_y.png",
+        "selectedIconPath": "images/tabbar-home-active.png",
+        "iconPath": "images/tabbar-home.png",
         "pagePath": "pages/index/index",
         "text": "首页"
       },
       {
-        "selectedIconPath": "images/Shopping.png",
-        "iconPath": "images/shopping_select.png",
-        "pagePath": "pages/cart/index",
-        "text": "咨询"
+        "selectedIconPath": "images/tabbar-org-active.png",
+        "iconPath": "images/tabbar-org.png",
+        "pagePath": "pages/organization/index",
+        "text": "组织"
       },
       {
-        "selectedIconPath": "images/Shopping.png",
-        "iconPath": "images/shopping_select.png",
-        "pagePath": "pages/cart/index",
-        "text": "购物车"
+        "selectedIconPath": "images/tabbar-service-active.png",
+        "iconPath": "images/tabbar-service.png",
+        "pagePath": "pages/service/index",
+        "text": "服务"
       },
       {
-        "selectedIconPath": "images/my_y.png",
-        "iconPath": "images/my_n.png",
+        "selectedIconPath": "images/tabbar-activity-active.png",
+        "iconPath": "images/tabbar-activity.png",
+        "pagePath": "pages/activity/index",
+        "text": "活动"
+      },
+      {
+        "selectedIconPath": "images/tabbar-my-active.png",
+        "iconPath": "images/tabbar-my.png",
         "pagePath": "pages/user/index",
         "text": "我的"
       }
