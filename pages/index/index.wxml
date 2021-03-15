@@ -1,14 +1,19 @@
 <!--index.wxml-->
 <scroll-view class="container" scroll-y  bindscrolltolower="lower">
+  <view class="home-banner-logo">
+  </view>
+  <view class="home-title">
+    <image  src="../../images/logo-big.png" mode="heightFix"></image>
+  </view>
  <swiper 
     indicator-dots="{{indicatorDots}}"
     autoplay="{{autoplay}}" 
     interval="{{interval}}" 
     duration="{{duration}}"
     >
-      <block wx:for="{{imgUrls}}">
+      <block wx:for="{{bannerImgList}}">
         <swiper-item>
-          <image src='{{baseUrl+item.img_url}}' style='width:100%;height:220px;' />
+          <image src='{{item.imgUrl}}' style='width:100%;height:220px;' />
         </swiper-item>
       </block>
   </swiper>
@@ -57,5 +62,4 @@
       </view>
     </view>
   </view>
-  <!-- <button bindtap='imgsc'> 上传</button> -->
 </scroll-view>

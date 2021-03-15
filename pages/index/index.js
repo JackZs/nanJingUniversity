@@ -1,76 +1,25 @@
-// //index.js
-// const app = getApp()
 
-// Page({
-//   data: {
-//     avatarUrl: './user-unlogin.png',
-//     userInfo: {},
-//     hasUserInfo: false,
-//     logged: false,
-//     takeSession: false,
-//     requestResult: '',
-//     canIUseGetUserProfile: false,
-//     canIUseOpenData: wx.canIUse('open-data.type.userAvatarUrl') // 如需尝试获取用户信息可改为false
-//   },
-
-//   onLoad: function() {
-//     if (!wx.cloud) {
-//       wx.redirectTo({
-//         url: '../chooseLib/chooseLib',
-//       })
-//       return
-//     }
-//     if (wx.getUserProfile) {
-//       this.setData({
-//         canIUseGetUserProfile: true,
-//       })
-//     }
-//   },
-
-//   getUserProfile() {
-//     // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认，开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
-//     wx.getUserProfile({
-//       desc: '展示用户信息', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
-//       success: (res) => {
-//         this.setData({
-//           avatarUrl: res.userInfo.avatarUrl,
-//           userInfo: res.userInfo,
-//           hasUserInfo: true,
-//         })
-//       }
-//     })
-//   },
-
-//   onGetUserInfo: function(e) {
-//     if (!this.data.logged && e.detail.userInfo) {
-//       this.setData({
-//         logged: true,
-//         avatarUrl: e.detail.userInfo.avatarUrl,
-//         userInfo: e.detail.userInfo,
-//         hasUserInfo: true,
-//       })
-//     }
-//   },
-
-// })
-//index.js
 //获取应用实例
 const app = getApp()
-
 Page({
   data: {
-    motto: 'Hello World',
-    userInfo: {},
-    hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    imgUrls: null,
+    bannerImgList: [],
     baseUrl:"https://wx.yogalt.com/",
     indicatorDots: true,
     autoplay: true,
-    interval: 5000,
+    interval: 3000,
     duration: 1000,
     list:[],
-    page:1
+    page:1,
+    avatarUrl: './user-unlogin.png',
+    userInfo: {},
+    hasUserInfo: false,
+    logged: false,
+    takeSession: false,
+    requestResult: '',
+    canIUseGetUserProfile: false,
+    canIUseOpenData: wx.canIUse('open-data.type.userAvatarUrl') // 如需尝试获取用户信息可改为false
   },
   //事件处理函数
   bindViewTap: function() {
@@ -133,9 +82,25 @@ Page({
       }
     })
   },
+  getBannerList(){
+    wx.request({
+      url:'https://xyh.nju.edu.cn/uplus-system/app/v1/mobile/group/getMobileSettingGroupList',
+      method:'GET',
+      data:{
+      groupType:1
+      },
+      success:(res)=>{
+        this.setData({
+          bannerImgList: res.data.data
+        })
+
+      }
+    })
+
+  },
   lower:function(e){
     console.log(e)
-    this.getList()
+    this.getBannerList()
   },
   getList: function(){
     app.http('v1/home/getHotList', { page: this.data.page})
@@ -156,14 +121,19 @@ Page({
   },
   onLoad: function () {
     let app = getApp()
-    this.getList()
-
-    app.http('v1/home/bannerList')
-    .then(res=>{
+    this.getBannerList()
+     if (wx.getUserProfile) {
       this.setData({
-        imgUrls: res.data
-      })
-    })
+        canIUseGetUserProfile: true,
+       })
+     }
+
+    // app.http('v1/home/bannerList')
+    // .then(res=>{
+    //   this.setData({
+    //     imgUrls: res.data
+    //   })
+    // })
     // app.http('v1/admin/addCoupon',{
     //   name:'节日蛋糕满200减50',
     //   money:50,
@@ -222,33 +192,57 @@ Page({
     //   }
     // })
     
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
-      })
-    } else if (this.data.canIUse){
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
+    // if (app.globalData.userInfo) {
+    //   this.setData({
+    //     userInfo: app.globalData.userInfo,
+    //     hasUserInfo: true
+    //   })
+    // } else if (this.data.canIUse){
+    //   // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
+    //   // 所以此处加入 callback 以防止这种情况
+    //   app.userInfoReadyCallback = res => {
+    //     this.setData({
+    //       userInfo: res.userInfo,
+    //       hasUserInfo: true
+    //     })
+    //   }
+    // } else {
+    //   // 在没有 open-type=getUserInfo 版本的兼容处理
+    //   wx.getUserInfo({
+    //     success: res => {
+    //       app.globalData.userInfo = res.userInfo
+    //       this.setData({
+    //         userInfo: res.userInfo,
+    //         hasUserInfo: true
+    //       })
+    //     }
+    //   })
+    // }
+  },
+  getUserProfile() {
+    // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认，开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
+    wx.getUserProfile({
+      desc: '展示用户信息', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+      success: (res) => {
         this.setData({
+          avatarUrl: res.userInfo.avatarUrl,
           userInfo: res.userInfo,
-          hasUserInfo: true
+          hasUserInfo: true,
         })
       }
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo
-          this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
-          })
-        }
+    })
+  },
+  onGetUserInfo: function(e) {
+    if (!this.data.logged && e.detail.userInfo) {
+      this.setData({
+        logged: true,
+        avatarUrl: e.detail.userInfo.avatarUrl,
+        userInfo: e.detail.userInfo,
+        hasUserInfo: true,
       })
     }
   },
+
   changeIndicatorDots: function (e) {
     this.setData({
       indicatorDots: !this.data.indicatorDots

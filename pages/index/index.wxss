@@ -9,6 +9,24 @@
 .container {
   background-color: #F2f2f2;
   min-height: 100%;
+  position: relative;
+}
+.home-banner-logo{
+  width:750rpx;
+  height:364rpx;
+  background:#73106F url('https://xyh.nju.edu.cn/app-resource/nanda/home/top-bg.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  position: absolute;
+  left:0;
+  top: 0;
+  z-index:0;
+}
+.home-title{
+   width:500rpx;
+   position: relative;
+   z-index:1;
 }
 .userinfo, .uploader, .tunnel {
   margin-top: 40rpx;
