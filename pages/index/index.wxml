@@ -1,23 +1,79 @@
 <!--index.wxml-->
-<scroll-view class="container" scroll-y  bindscrolltolower="lower">
-  <view class="home-banner-logo">
+<scroll-view class="container" scroll-y  bindscrolltolower="lower" enable-flex="true">
+  <view class="home-warp">
+    <view class="home-banner-logo">
+    </view>
+    <view class="home-title">
+      <image  src="../../images/logo-big.png" mode="aspectFit"></image>
+    </view>
+    <swiper indicator-dots="{{indicatorDots}}"  autoplay="{{autoplay}}" 
+      interval="{{interval}}"  duration="{{duration}}" class="home-swiper">
+        <block wx:for="{{bannerImgList}}" wx:key="index">
+          <swiper-item class="home-swiper-item">
+            <image src='{{item.imgUrl}}' />
+            <view class="swiper-desc">
+               <p class="swiper-title">{{item.title}}</p>
+               <p class="swiper-number">{{index+1}}/{{bannerImgList.length}}</p>
+            </view>
+          </swiper-item>
+        </block>
+    </swiper>
+    <view class="home-category">
+       <view class="category-item" wx:for="{{categoryList}}" wx:key="index">
+         <image class="" src="{{item.thumbnail}}" mode="scaleToFill"></image>
+         <text>{{item.title}}</text>
+       </view>
+    </view>
   </view>
-  <view class="home-title">
-    <image  src="../../images/logo-big.png" mode="heightFix"></image>
+  <view class="home-news">
+     <view class="home-news-top">
+       <image class="news-icon" src="../../images/de-icon.png" mode="scaleToFill"></image>
+       <text>新闻中心</text>
+       <view class="home-news-more">
+          <text class="more-text">更多</text>
+          <image class="more-icon" src="../../images/arrow.png" mode="scaleToFill"></image>
+       </view>
+     </view>
+     <view class="home-news-list">
+         <view class="news-list-item" wx:for="{{newsList}}" wx:key="index">
+            <image class="" src="{{item.coverImage}}" mode="scaleToFill"></image>
+            <view class="item-desc">
+                <text class="item-title">{{item.articleTitle}}</text>
+                <view class="item-detail">
+                   <text class="item-date">{{item.publishDate}}</text>
+                   <text class="item-count">阅读：{{item.readCount}}</text>
+                </view>
+            </view>
+         </view>
+     </view>
   </view>
- <swiper 
-    indicator-dots="{{indicatorDots}}"
-    autoplay="{{autoplay}}" 
-    interval="{{interval}}" 
-    duration="{{duration}}"
-    >
-      <block wx:for="{{bannerImgList}}">
-        <swiper-item>
-          <image src='{{item.imgUrl}}' style='width:100%;height:220px;' />
-        </swiper-item>
-      </block>
-  </swiper>
-  <view class='icon'>
+  <view class="home-activity">
+     <view class="home-activity-top">
+       <image class="activity-icon" src="../../images/de-icon.png" mode="scaleToFill"></image>
+       <text>校友活动</text>
+       <view class="home-activity-more">
+          <text class="more-text">更多</text>
+          <image class="more-icon" src="../../images/arrow.png" mode="scaleToFill"></image>
+       </view>
+     </view>
+     <view class="home-activity-banner">
+       <swiper   class="home-activity-swiper" next-margin="98rpx">
+              <swiper-item wx:for="{{activityList}}" wx:key="index" class="swiper-item" circular>
+                    <image class="activity-item-image " src="{{item.coverImg}}" mode="scaleToFill"></image>
+                     <view class="activity-item-desc">
+                       <view class="activity-item-content">
+                         <text>{{item.title}}</text>
+                       </view>
+                       <view class="activity-item-detail">
+                         <text class="activity-item-status">{{item.beginDate}}至{{item.endDate}}</text>
+                         <text class="activity-item-status">{{item.activityStatus=='0'?'报名未开始':item.activityStatus=='1'?'活动未发布':item.activityStatus=='2'?'活动已结束':item.activityStatus=='3'?'报名已关闭':item.activityStatus=='4'?'报名未开始':item.activityStatus=='5'?'报名进行中':item.activityStatus=='6'?'报名已结束':item.activityStatus=='7'?'活动进行中':''}}</text>
+                       </view>
+                     </view>
+                </swiper-item>
+       </swiper>
+     </view>
+  </view>
+ <!--  <view class='icon'>
     <navigator hover-class="none" url="/pages/list/index?title=生日&id=5b8e37e34b640a63b33272dc">
       <image src='/images/birthday.png' mode="aspectFit"></image>
       <text>生日</text>
@@ -34,7 +90,7 @@
       <image src='/images/party.png' mode="aspectFit"></image>
       <text>party</text>
     </navigator>
-  </view>
+  </view> -->
   <!-- <view class='title'>
     <text class='cn'>主题</text>
     <text class='en'>Theme</text>d5e7f5d5e7f5d5e7f5d5e7f5d5e7f5d5e7f5d5e7f5d5e7f5d5e7f5d5e7f5
@@ -44,7 +100,7 @@
     <image src='/images/banner_3.png' mode="widthFix"></image>
     <image src='/images/banner_4.png' mode="widthFix"></image>
   </view> -->
-  <view class='title'>
+ <!--  <view class='title'>
     <text class='cn'>猜你喜欢</text>
     <text class='en'>Lovely</text>
   </view>
@@ -61,5 +117,5 @@
         </view>
       </view>
     </view>
-  </view>
+  </view> -->
 </scroll-view>

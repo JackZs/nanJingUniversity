@@ -5,11 +5,14 @@ Page({
   data: {
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     bannerImgList: [],
+    categoryList:[],
+    activityList:[],
+    newsList:[],
     baseUrl:"https://wx.yogalt.com/",
-    indicatorDots: true,
+    indicatorDots: false,
     autoplay: true,
     interval: 3000,
-    duration: 1000,
+    duration: 500,
     list:[],
     page:1,
     avatarUrl: './user-unlogin.png',
@@ -96,11 +99,53 @@ Page({
 
       }
     })
-
+  },
+  getCategoryList(){
+    wx.request({
+      url:'https://xyh.nju.edu.cn/uplus-system/app/v1/mobile/group/getMobileSettingGroupList',
+      method:'GET',
+      data:{
+      groupType:2
+      },
+      success:(res)=>{
+        this.setData({
+          categoryList: res.data.data
+        })
+      }
+    })
+  },
+  getNewsList(){
+    wx.request({
+      url:'https://xyh.nju.edu.cn/uplus-operateu/api/v1/web/mobile/index/article/list',
+      method:'GET',
+      data:{
+        offset: 0,
+        limit: 3,
+        websiteId: 1,
+        isRecommend: 1,
+        orderBy: 'order by wai.publish_date DESC'
+      },
+      success:(res)=>{
+        this.setData({
+          newsList: res.data.data.rows
+        })
+      }
+    })
+  },
+  getActivityList(){
+    wx.request({
+      url:'https://xyh.nju.edu.cn/uplus-operateu/app/v1/activity/getActivityPage',
+      method:'GET',
+      data:{},
+      success:(res)=>{
+        this.setData({
+          activityList: res.data.data.rows.splice(0,3)
+        })
+      }
+    })
   },
   lower:function(e){
     console.log(e)
-    this.getBannerList()
   },
   getList: function(){
     app.http('v1/home/getHotList', { page: this.data.page})
@@ -122,6 +167,9 @@ Page({
   onLoad: function () {
     let app = getApp()
     this.getBannerList()
+    this.getCategoryList()
+    this.getNewsList()
+    this.getActivityList()
      if (wx.getUserProfile) {
       this.setData({
         canIUseGetUserProfile: true,
