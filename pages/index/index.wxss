@@ -153,6 +153,13 @@
    flex-wrap: wrap;
    line-height: 50rpx;
    font-size: 28rpx;
+   max-height: 100rpx;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   -webkit-line-clamp: 2;
+   word-break: break-all;
+   -webkit-box-orient: vertical;
+   display: -webkit-box;
 }
 .item-desc .item-detail{
     color: #c4c4c4;
